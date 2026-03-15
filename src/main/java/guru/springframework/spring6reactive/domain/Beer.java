@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//No JPA @Entity etc..
 public class Beer {
 
     @Id
