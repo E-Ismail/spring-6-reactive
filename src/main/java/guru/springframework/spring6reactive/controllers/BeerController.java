@@ -44,11 +44,18 @@ public class BeerController {
 
     @PutMapping(BEER_PATH_ID)
     Mono<ResponseEntity<BeerDTO>> updateBeer(@PathVariable("beerId") Integer beerId, @RequestBody BeerDTO beerDTO) {
-        return beerService.updateBeer(beerId, beerDTO).map(updatedBeer -> ResponseEntity.ok().body(updatedBeer));
+        return beerService.updateBeer(beerId, beerDTO)
+                .map(updatedBeer -> ResponseEntity.ok().body(updatedBeer));
     }
 
     @PatchMapping(BEER_PATH_ID)
     Mono<ResponseEntity<Void>> patchBeer(@PathVariable("beerId") Integer beerId, @RequestBody BeerDTO beerDTO) {
-        return beerService.patchBeer(beerId, beerDTO).map(updatedBeer -> ResponseEntity.accepted().build());
+        return beerService.patchBeer(beerId, beerDTO)
+                .map(updatedBeer -> ResponseEntity.accepted().build());
+    }
+
+    @DeleteMapping(BEER_PATH_ID)
+    Mono<ResponseEntity<Void>> deleteBeer(@PathVariable("beerId") Integer beerId) {
+        return beerService.deleteBeerById(beerId).then(Mono.fromCallable(() -> ResponseEntity.noContent().build()));
     }
 }
