@@ -35,12 +35,20 @@ public class BeerController {
 
     @PostMapping(BEER_PATH)
     Mono<ResponseEntity<Void>> createNewBeer(@RequestBody BeerDTO beerDTO) {
-
-
         return beerService.saveNewBeer(beerDTO)
                 .map(savedDto -> ResponseEntity
                         .created(UriComponentsBuilder.fromUriString("localhost:8080/" + BEER_PATH + "/" + savedDto.getId()).build().toUri())
                         .build()
                 );
+    }
+
+    @PutMapping(BEER_PATH_ID)
+    Mono<ResponseEntity<BeerDTO>> updateBeer(@PathVariable("beerId") Integer beerId, @RequestBody BeerDTO beerDTO) {
+        return beerService.updateBeer(beerId, beerDTO).map(updatedBeer -> ResponseEntity.ok().body(updatedBeer));
+    }
+
+    @PatchMapping(BEER_PATH_ID)
+    Mono<ResponseEntity<Void>> patchBeer(@PathVariable("beerId") Integer beerId, @RequestBody BeerDTO beerDTO) {
+        return beerService.patchBeer(beerId, beerDTO).map(updatedBeer -> ResponseEntity.accepted().build());
     }
 }
