@@ -36,7 +36,7 @@ public class CustomerController {
     }
 
     @PostMapping(CUSTOMER_PATH)
-    public Mono<ResponseEntity<Void>> saveNewCustomer(@RequestBody CustomerDTO customerDTO) {
+    public Mono<ResponseEntity<Void>> saveNewCustomer(@Validated @RequestBody CustomerDTO customerDTO) {
         return customerService.saveNewCustomer(customerDTO)
                 .map(savedCustomerDto ->
                         ResponseEntity
@@ -48,7 +48,7 @@ public class CustomerController {
     }
 
     @PutMapping(CUSTOMER_PATH_ID)
-    public Mono<ResponseEntity<Void>> updateCustomer(@PathVariable Integer customerId, @RequestBody CustomerDTO customerDTO) {
+    public Mono<ResponseEntity<Void>> updateCustomer(@PathVariable Integer customerId, @Validated @RequestBody CustomerDTO customerDTO) {
         return customerService.updateCustomer(customerId, customerDTO).map(updatedCustomerDto -> ResponseEntity.noContent().build());
     }
 
