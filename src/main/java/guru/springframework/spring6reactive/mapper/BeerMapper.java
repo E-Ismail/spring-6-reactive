@@ -9,10 +9,21 @@ package guru.springframework.spring6reactive.mapper;
 import guru.springframework.spring6reactive.domain.Beer;
 import guru.springframework.spring6reactive.model.BeerDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.time.LocalDateTime;
 
 @Mapper
 public interface BeerMapper {
 
-    Beer  beerDTOToBeer(BeerDTO beerDTO);
+
+    @Mapping(target = "createdDate", expression = "java(beerDTO.getCreatedDate()!=null?beerDTO.getCreatedDate():java.time.LocalDateTime.now())")
+    @Mapping(target = "lastModifiedDate", expression = "java(resolveDate(beerDTO.getLastModifiedDate()))")
+    Beer beerDTOToBeer(BeerDTO beerDTO);
+
     BeerDTO beerToBeerDTO(Beer beer);
+
+    default LocalDateTime resolveDate(LocalDateTime date) {
+        return date != null ? date : LocalDateTime.now();
+    }
 }
