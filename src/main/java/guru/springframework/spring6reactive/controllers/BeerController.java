@@ -33,6 +33,6 @@ public class BeerController {
 
     @PostMapping(BEER_PATH)
     Mono<BeerDTO> createNewBeer(@RequestBody BeerDTO beerDTO) {
-        return beerService.addBeer(beerDTO);
+        return beerService.saveNewBeer(beerDTO);
     }
 }
