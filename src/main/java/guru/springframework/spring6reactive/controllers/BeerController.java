@@ -9,7 +9,9 @@ package guru.springframework.spring6reactive.controllers;
 import guru.springframework.spring6reactive.model.BeerDTO;
 import guru.springframework.spring6reactive.services.BeerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -32,7 +34,13 @@ public class BeerController {
     }
 
     @PostMapping(BEER_PATH)
-    Mono<BeerDTO> createNewBeer(@RequestBody BeerDTO beerDTO) {
-        return beerService.saveNewBeer(beerDTO);
+    Mono<ResponseEntity<Void>> createNewBeer(@RequestBody BeerDTO beerDTO) {
+
+
+        return beerService.saveNewBeer(beerDTO)
+                .map(savedDto -> ResponseEntity
+                        .created(UriComponentsBuilder.fromUriString("localhost:8080/" + BEER_PATH + "/" + savedDto.getId()).build().toUri())
+                        .build()
+                );
     }
 }

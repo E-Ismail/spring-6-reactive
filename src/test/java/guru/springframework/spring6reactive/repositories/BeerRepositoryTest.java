@@ -1,5 +1,7 @@
 package guru.springframework.spring6reactive.repositories;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import guru.springframework.spring6reactive.config.DatabaseConfig;
 import guru.springframework.spring6reactive.domain.Beer;
 import org.junit.jupiter.api.Disabled;
@@ -29,6 +31,12 @@ class BeerRepositoryTest {
         String[] beans =  applicationContext.getBeanDefinitionNames();
         Arrays.sort(beans);
         Arrays.stream(beans).forEach(System.out::println);
+    }
+
+    @Test
+    void testCreateJson() throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        System.out.println(objectMapper.writeValueAsString(getTestBeer()));
     }
 
     @Test
