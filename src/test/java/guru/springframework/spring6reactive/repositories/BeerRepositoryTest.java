@@ -17,7 +17,7 @@ import java.util.Arrays;
 //Test Splice for R2DBC
 @DataR2dbcTest
 @Import(DatabaseConfig.class)
-class BeerRepositoryTest {
+public class BeerRepositoryTest {
 
     @Autowired
     BeerRepository beerRepository;
@@ -45,7 +45,7 @@ class BeerRepositoryTest {
                 .subscribe(beer -> System.out.println(beer.toString()));
     }
 
-    Beer getTestBeer() {
+    public static Beer getTestBeer() {
         return Beer.builder()
                 .beerName("Space Dust")
                 .beerStyle("IPA")
